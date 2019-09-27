@@ -13,7 +13,7 @@ the JSON API (https://www.domoticz.com/wiki/Domoticz_API/JSON_URL%27s).
 
 A web server executing the .php code is required.
 
-The Domoticz installation and web server is tested on Raspberry Pi.
+The Domoticz installation and web server is tested on Raspberry Pi 3B.
 
 
 
