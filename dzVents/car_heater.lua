@@ -30,10 +30,10 @@ return {
                     local tempOutside = domoticz.devices("Utomhus norr").temperature
                     local tempStart = domoticz.variables("carWarmTempStart").value
                     local warmMinutes = domoticz.variables("carWarmMinus5Minutes").value
-                    local heaterStartMinutes = ((tempOutside - tempStart) / (-5.0 - tempStart)) * warmMinutes
+                    local heaterStartMinutes = math.floor(((tempOutside - tempStart) / (-5.0 - tempStart)) * warmMinutes)
                     local turnOnTime = timeWarm - (heaterStartMinutes * 60)
                     local turnOffTime = timeWarm + (30 * 60)
-                    domoticz.variables("carWarmStartTime").set(turnOnTime)
+                    domoticz.variables("cheaterStartMinutes").set(turnOnTime)
                     if (DEBUGPRT == true) then
                         print(string.format("Time when car warm: %d = %s", timeWarm, os.date("%Y-%m-%d %H:%M", timeWarm)))
                         print(string.format("Time now: %d = %s", timeNow, os.date("%Y-%m-%d %H:%M", timeNow)))
