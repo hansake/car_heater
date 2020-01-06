@@ -31,9 +31,12 @@ return {
                     local tempStart = domoticz.variables("carWarmTempStart").value
                     local warmMinutes = domoticz.variables("carWarmMinus5Minutes").value
                     local heaterStartMinutes = math.floor(((tempOutside - tempStart) / (-5.0 - tempStart)) * warmMinutes)
-                    local turnOnTime = timeWarm - (heaterStartMinutes * 60)
+                    local turnOnTime = 0
+                    if (0 < heaterStartMinutes) then
+                        turnOnTime = timeWarm - (heaterStartMinutes * 60)
+                    end
                     local turnOffTime = timeWarm + (30 * 60)
-                    domoticz.variables("cheaterStartMinutes").set(turnOnTime)
+                    domoticz.variables("carWarmStartTime").set(turnOnTime)
                     if (DEBUGPRT == true) then
                         print(string.format("Time when car warm: %d = %s", timeWarm, os.date("%Y-%m-%d %H:%M", timeWarm)))
                         print(string.format("Time now: %d = %s", timeNow, os.date("%Y-%m-%d %H:%M", timeNow)))
@@ -42,7 +45,7 @@ return {
                         print(string.format("Heater started at: %d = %s", turnOnTime, os.date("%Y-%m-%d %H:%M", turnOnTime)))
                         print(string.format("Heater stopped at: %d = %s", turnOffTime, os.date("%Y-%m-%d %H:%M", turnOffTime)))
                     end
-                    if ((heaterStartMinutes < 0) or (turnOffTime <= timeNow)) then -- if no heating needed or 30 minutes past warm time then stop heating
+                    if ((heaterStartMinutes <= 0) or (turnOffTime <= timeNow)) then -- if no heating needed or 30 minutes past warm time then stop heating
                         if (DEBUGPRT == true) then
                             print(string.format("Turn heater off (if on)"))
                         end
