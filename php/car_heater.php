@@ -10,9 +10,42 @@ include 'car_heater_params.php';
 <!DOCTYPE html>
 <html>
 <head>
-
-</head>
 <title>Car Heater</title>
+<style>
+body {
+  font-size: 4vw;
+}
+@media screen and (min-width: 1000px) {
+  body {
+     font-size: 25px;
+  }
+}
+input {
+  font-size: 4vw;
+}
+@media screen and (min-width: 1000px) {
+  input {
+     font-size: 25px;
+  }
+}
+button {
+  font-size: 4vw;
+}
+@media screen and (min-width: 1000px) {
+  button {
+     font-size: 25px;
+  }
+}
+legend {
+  font-size: 4vw;
+}
+@media screen and (min-width: 1000px) {
+  legend {
+     font-size: 25px;
+  }
+}
+</style>
+</head>
 <body>
 <h1>Car Heater</h1>
 
@@ -70,44 +103,41 @@ if ($debugprint == "true")
 ?>
 
 <?php
-echo "<h2>";
-echo "Car heater is: ".$heatonoff.". Outside temperature is: ".$outtemp." &deg;C. ";
+echo "<h3>";
+echo "Car heater is: ".$heatonoff."<br>";
 if ($heatenabled == 1) {
   echo "Heater timer is enabled.";
 } else {
   echo "Heater timer is disabled.";
 }
-echo "</h2>";
+echo "</h3>";
 if ($heatstarttime > 0) {
-  echo "<h2>";
-  echo "Start heater at: ";
+  echo "<h5>";
+  echo "Heater will start: ";
   echo $chst_date;
   echo " ";
   echo $chst_time;
-  echo "</h2>";
+  echo "</h5>";
 }
+echo "<h5>";
+echo "Outside temperature is: ".$outtemp." &deg;C. ";
+echo "</h5>";
 ?>
 <form action="car_heater_action.php" method="post">
 <fieldset>
-<legend style="font-size:<?php echo $textsizevw;?>vw;">Car will be warm at: </legend>
-<input style="font-size:<?php echo $textsizevw;?>vw;" type="date" name="car_heat_date" value=<?php echo $ch_date;?>>
-<input style="font-size:<?php echo $textsizevw;?>vw;" type="time" name="car_heat_time" value=<?php echo $ch_time;?>>
+<legend>Car will be warm at: </legend>
+<input type="date" name="car_heat_date" value=<?php echo $ch_date;?>>
+<input type="time" name="car_heat_time" value=<?php echo $ch_time;?>>
 </fieldset>
-<button style="font-size:<?php echo $textsizevw;?>vw;" type="submit" name="car_heat" value="car_heat_enable">
-Set time and enable timer
-</button>
-<button style="font-size:<?php echo $textsizevw;?>vw;" type="submit" name="car_heat" value="car_heat_disable">
-Disable timer
-</button>
+<br>
+<button type="submit" name="car_heat" value="car_heat_enable">Set time and enable timer</button>
+<br><br>
+<button type="submit" name="car_heat" value="car_heat_disable">Disable timer</button>
 </form>
 <br>
 <form action="car_heater_onoff.php" method="post">
-<button style="font-size:<?php echo $textsizevw;?>vw;" name="heateronoff" type="submit" value="On">
-Heater On
-</button>
-<button style="font-size:<?php echo $textsizevw;?>vw;" name="heateronoff" type="submit" value="Off">
-Heater Off
-</button>
+<button name="heateronoff" type="submit" value="On">Heater On</button>
+<button name="heateronoff" type="submit" value="Off">Heater Off</button>
 </form>
 <br>
 <a href="car_heater_status.php">Status and variables</a>
