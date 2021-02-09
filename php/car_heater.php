@@ -12,35 +12,11 @@ include 'car_heater_params.php';
 <head>
 <title>Car Heater</title>
 <style>
-body {
+* {
   font-size: 4vw;
 }
 @media screen and (min-width: 1000px) {
-  body {
-     font-size: 25px;
-  }
-}
-input {
-  font-size: 4vw;
-}
-@media screen and (min-width: 1000px) {
-  input {
-     font-size: 25px;
-  }
-}
-button {
-  font-size: 4vw;
-}
-@media screen and (min-width: 1000px) {
-  button {
-     font-size: 25px;
-  }
-}
-legend {
-  font-size: 4vw;
-}
-@media screen and (min-width: 1000px) {
-  legend {
+  * {
      font-size: 25px;
   }
 }
