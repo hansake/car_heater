@@ -16,12 +16,39 @@ return {
     on = {
         timer = {"every 5 minutes"}
     },
+    data = {
+        carHeaterNotifySent = { initial = 0 }
+    },
     execute = function(domoticz, item)
         -- First check that all parameters in user variables are set
         if domoticz.variables("carWarmTempStart") and domoticz.variables("carWarmMinus5Minutes") and domoticz.variables("carWarmReadyTime") and domoticz.variables("carWarmEnabled") then
             if (item.isTimer) then
+                
                 if (DEBUGPRT == true) then
                     print(string.format("Car heater timer enable: %d", domoticz.variables("carWarmEnabled").value))
+                end
+                if (domoticz.devices("Kupevärmare").state == "On") then
+                    local carHeaterWatt = domoticz.devices("Kupevärme W").actualWatt
+                    if (DEBUGPRT == true) then
+                        print(string.format("Car heater is on, Watt: %d", carHeaterWatt))
+                        print(string.format("carHeaterNotifySent: %d", domoticz.data.carHeaterNotifySent))
+                    end
+                    if (carHeaterWatt < 100) then
+                        if (domoticz.data.carHeaterNotifySent == 0) then
+                            domoticz.data.carHeaterNotifySent = 1
+                            -- Send notification
+                            domoticz.notify("Kupevarmare", "Kupevärme: kabel ej ansluten", domoticz.PRIORITY_NORMAL)
+                            if (DEBUGPRT == true) then
+                                print(string.format("Car heater notification sent"))
+                            end
+                        end
+                    else
+                        -- Do not send notify when cable is unplugged after car is warm
+                        -- but switch is still on
+                        domoticz.data.carHeaterNotifySent = 1
+                    end
+                else
+                    domoticz.data.carHeaterNotifySent = 0
                 end
                 domoticz.variables("carWarmStartTime").set(0)
                 if (domoticz.variables("carWarmEnabled").value == 1) then
@@ -68,3 +95,4 @@ return {
         end
     end
 }
+
