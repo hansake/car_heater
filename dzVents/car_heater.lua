@@ -33,7 +33,8 @@ return {
                         print(string.format("Car heater is on, Watt: %d", carHeaterWatt))
                         print(string.format("carHeaterNotifySent: %d", domoticz.data.carHeaterNotifySent))
                     end
-                    if (carHeaterWatt < 100) then
+                    -- Do not send notify when current time is later than carWarmReadyTime, added 2021-11-14
+                    if ((carHeaterWatt < 100) and (os.time() < domoticz.variables("carWarmReadyTime").value)) then
                         if (domoticz.data.carHeaterNotifySent == 0) then
                             domoticz.data.carHeaterNotifySent = 1
                             -- Send notification
@@ -95,4 +96,3 @@ return {
         end
     end
 }
-
